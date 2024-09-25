@@ -1,39 +1,63 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+# Wrapper Library
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+The `wrapper` library provides two functions for fetching lessons from a remote service.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+## Installation
 
-## Features
+Add the `wrapper` package to your `pubspec.yaml`:
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+```yaml
+dependencies:
+  unipi_orario_wrapper:
+    git:
+      url: https://github.com/your_repo/unipi_orario_wrapper.git
+```
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Run `flutter pub get` to install the dependencies.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### Importing
 
 ```dart
-const like = 'sample';
+import 'package:unipi_orario_wrapper/src/models/lesson.dart';
+import 'package:unipi_orario_wrapper/src/service/wrapper_api_service.dart';
 ```
 
-## Additional information
+### Fetching Raw Lessons Data
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+The `fetchLessons` method retrieves a list of lessons as dynamic objects:
+
+```dart
+WrapperService wrapperService = WrapperService();
+
+List<dynamic> lessons = await wrapperService.fetchLessons(
+  calendarId: 'your_calendar_id',
+  startDate: DateTime(2023, 09, 01),
+  endDate: DateTime(2023, 09, 07),
+);
+
+print(lessons);
+```
+
+### Fetching Lessons as Objects
+
+The `fetchLessonsObj` method retrieves lessons and converts them into `Lesson` objects:
+
+```dart
+WrapperService wrapperService = WrapperService();
+
+List<Lesson> lessons = await wrapperService.fetchLessonsObj(
+  calendarId: 'your_calendar_id',
+  startDate: DateTime(2023, 09, 01),
+  endDate: DateTime(2023, 09, 07),
+);
+
+for (var lesson in lessons) {
+  print(lesson);
+}
+```
+
+### Lesson Object Structure
+[View the file](https://github.com/UniPi-Orari/api-wrapper/blob/master/lib/src/models/lesson.dart)
