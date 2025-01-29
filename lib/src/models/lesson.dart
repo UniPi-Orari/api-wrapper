@@ -4,13 +4,13 @@ class Lesson {
   final String name;
   final DateTime startDateTime;
   final DateTime endDateTime;
-  final String courseName;
+  final String? courseName;
 
   Lesson({
     required this.name,
     required this.startDateTime,
     required this.endDateTime,
-    required this.courseName,
+    this.courseName,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
@@ -20,7 +20,7 @@ class Lesson {
       name: json['nome'],
       startDateTime: parsedDates[0],
       endDateTime: parsedDates[1],
-      courseName: json['fattoreDiPartizione'][0]['partizioni'][0]['descrizione'],
+      courseName: json['fattoreDiPartizione'].length > 0 ? json['fattoreDiPartizione'][0]['partizioni'][0]['descrizione'] : null,
     );
   }
 
